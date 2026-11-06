@@ -10,3 +10,6 @@ xcuserdata/
 
 # brainstorming mockups & SDD snapshots (local working files)
 /.superpowers/
+
+# packaged releases (scripts/package.sh)
+/dist/

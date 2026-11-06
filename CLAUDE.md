@@ -16,6 +16,7 @@ xcodebuild -project PTTMarquee.xcodeproj -scheme PTTMarquee -destination 'platfo
 xcodebuild -project PTTMarquee.xcodeproj -scheme PTTMarquee -destination 'platform=macOS' test -only-testing:PTTMarqueeTests/ChatRowTests
 xcodegen generate             # 新增/刪除/搬移原始檔後必須執行
 ./scripts/make-app-icon.sh    # 依 scripts/AppIcon.swift 重新產生 AppIcon.appiconset 各尺寸
+./scripts/package.sh          # Release universal 打包到 dist/（.dmg + .zip；ad-hoc 簽章、未公證）
 ```
 
 - `project.yml`（XcodeGen）才是專案設定來源，`PTTMarquee.xcodeproj` 是產生物；改 build settings 請改 `project.yml` 再重新 generate，不要手改 pbxproj。

@@ -84,6 +84,17 @@ xcodebuild -project PTTMarquee.xcodeproj -scheme PTTMarquee -destination 'platfo
 
 > `project.yml` 是專案設定的唯一來源，`PTTMarquee.xcodeproj` 由 XcodeGen 產生，請勿手動修改。
 
+### 打包發佈版
+
+```bash
+./scripts/package.sh   # Release、Apple Silicon + Intel universal，輸出 dist/PTTMarquee-<版本>.dmg 與 .zip
+```
+
+版本號取自 `project.yml` 的 `MARKETING_VERSION`。
+
+**安裝**：打開 `.dmg`，把 `PTTMarquee.app` 拖到「應用程式」；或解壓 `.zip` 直接執行。
+本 app 僅以 ad-hoc 簽章、未經 Apple 公證，第一次開啟時 macOS 會阻擋：請在「應用程式」中對 app **按右鍵 →「打開」→「打開」**（或到「系統設定 → 隱私權與安全性」按「強制打開」）。之後即可正常開啟。
+
 ### App 圖示
 
 圖示由程式繪製（黑底、藍標題列、大「推」字加底線游標、青提示列）。要調整時修改 `scripts/AppIcon.swift`，再執行：
