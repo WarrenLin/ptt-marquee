@@ -10,6 +10,16 @@
 | :---: | :---: | :---: |
 | <img src="docs/screenshots/main.png" width="280" alt="看板串流主畫面"> | <img src="docs/screenshots/settings.png" width="280" alt="個人設定畫面"> | <img src="docs/screenshots/help.png" width="280" alt="使用說明畫面"> |
 
+## 📥 下載安裝
+
+1. 到 [**Releases 頁面**](https://github.com/WarrenLin/ptt-marquee/releases/latest) 下載最新版：
+   - `PTTMarquee-<版本>.dmg`（建議）：打開後把 `PTTMarquee.app` 拖到「應用程式」資料夾。
+   - `PTTMarquee-<版本>.zip`：解壓縮後把 `PTTMarquee.app` 移到「應用程式」資料夾。
+2. **第一次開啟**：本 app 未經 Apple 公證，直接雙擊會被 macOS 擋下。請在「應用程式」中對 `PTTMarquee` **按右鍵 →「打開」→ 再按「打開」**；或雙擊被擋後，到「系統設定 → 隱私權與安全性」按「強制打開」。之後即可正常開啟。
+3. 需求：macOS 13 以上，Apple Silicon 與 Intel Mac 皆可。
+
+> 想在其他 App 裡用 `⌘⇧L` 切換固定視窗，需到「系統設定 → 隱私權與安全性 → 輔助使用」允許 PTT Marquee。
+
 ---
 
 ## ✨ 核心特色
@@ -92,8 +102,7 @@ xcodebuild -project PTTMarquee.xcodeproj -scheme PTTMarquee -destination 'platfo
 
 版本號取自 `project.yml` 的 `MARKETING_VERSION`。
 
-**安裝**：打開 `.dmg`，把 `PTTMarquee.app` 拖到「應用程式」；或解壓 `.zip` 直接執行。
-本 app 僅以 ad-hoc 簽章、未經 Apple 公證，第一次開啟時 macOS 會阻擋：請在「應用程式」中對 app **按右鍵 →「打開」→「打開」**（或到「系統設定 → 隱私權與安全性」按「強制打開」）。之後即可正常開啟。
+產出的檔案以 ad-hoc 簽章、未經 Apple 公證；上傳到 GitHub Releases 後，安裝方式見上方〈📥 下載安裝〉。
 
 ### App 圖示
 
