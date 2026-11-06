@@ -155,9 +155,13 @@ public final class ChatViewModel: ObservableObject {
     }
 
     public func changeBoard(_ board: PTTBoard) {
+        guard board != currentBoard else {
+            // 從單篇實況選回同一個看板：清掉實況留言並重新抓看板；本來就在看板串流則不動
+            unlockTargetArticle()
+            return
+        }
         targetArticle = nil
-        guard board != currentBoard else { return }
-        currentBoard = board
+        currentBoard = board   // didSet → onBoardChanged() 清空並重新抓取
     }
 
     public func setCustomBoard(name: String) {
@@ -205,6 +209,7 @@ public final class ChatViewModel: ObservableObject {
     /// 解除文章鎖定，返回看板串流
     public func unlockTargetArticle() {
         guard targetArticle != nil else { return }
+        pollTask?.cancel()
         targetArticle = nil
         queueManager.reset()
         messages.removeAll()
