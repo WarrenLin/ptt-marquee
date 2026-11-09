@@ -57,6 +57,8 @@
 7. **🔄 可調抓取頻率**：
    - 看板聚合模式：每 5~30 秒抓一次（預設 8 秒，建議 6~10 秒，避免被 PTT 暫時擋 IP）。
    - 單篇實況模式：每 2~15 秒抓一次（預設 3 秒）。
+   - 間隔從上一輪抓完才開始計算，實際週期是「設定秒數 + PTT 回應時間」（例如設 15 秒，約每 16～19 秒一輪）。
+   - 每一輪都會重新下載看板列表與文章頁，不使用 HTTP 快取，新推文會照設定的間隔出現（1.0.2 起）。
    - PTT 網頁版偶爾會卡住十幾秒；單次失敗會在下一輪自動重試，**連續失敗 3 次**才在提示列上方顯示中文紅字（例如「PTT 連線逾時，重試中…」），成功一次或暫停時自動消失。
 
 > **用詞說明**：「置頂／置底」指捲動訊息列表；視窗永遠在最上層稱為「浮動」（`T`）；防誤拖曳稱為「固定」（`L`）；「鎖定」只用於「鎖定此篇為實況聊天室」。
@@ -100,7 +102,7 @@ xcodebuild -project PTTMarquee.xcodeproj -scheme PTTMarquee -destination 'platfo
 ./scripts/package.sh   # Release、Apple Silicon + Intel universal，輸出 dist/PTTMarquee-<版本>.dmg 與 .zip
 ```
 
-版本號取自 `project.yml` 的 `MARKETING_VERSION`。
+版本號取自 `project.yml` 的 `MARKETING_VERSION`；各版本變更見 [CHANGELOG.md](CHANGELOG.md)。
 
 產出的檔案以 ad-hoc 簽章、未經 Apple 公證；上傳到 GitHub Releases 後，安裝方式見上方〈📥 下載安裝〉。
 
@@ -155,14 +157,16 @@ PTTMarquee/
 │   └── ChatRow.swift            # 留言與文章分隔線的列模型
 └── Views/                       # ChatOverlayView、TerminalMessageRow
     └── Terminal/                # 主題、標題／提示列、分隔線、設定／看板／說明子畫面
-PTTMarqueeTests/                 # 單元測試（按鍵對應、分組、分隔線、方塊條、置頂/置底、錯誤門檻、設定標籤長度）
-scripts/                         # App 圖示產生腳本
+PTTMarqueeTests/                 # 單元測試（按鍵對應、分組、分隔線、方塊條、置頂/置底、錯誤門檻、設定標籤長度、
+                                 #   預設看板、切換看板清空、停用 HTTP 快取）
+scripts/                         # App 圖示產生（make-app-icon.sh）、發佈打包（package.sh）
+CHANGELOG.md                     # 各版本更新紀錄
 docs/superpowers/                # telnet 改版的設計文件（specs/）與實作計畫（plans/）
 ```
 
 ## ⚙️ 運作原理
 
-1. **抓取**：`ChatViewModel` 持續輪詢。
+1. **抓取**：`ChatViewModel` 持續輪詢，每輪都直接向 PTT 重新下載（停用 HTTP 快取；PTT 文章頁會要求快取 15 分鐘，照做就看不到新推文）。
    - 看板模式：抓看板最新 8 篇文章，數量不夠時會補抓上一頁，並略過置底公告；接著並行抓取每篇的推文。
    - 單篇模式：只抓鎖定的那一篇。
 2. **去重與排隊**：`MessageQueueManager` 以「看板 + 文章 + 帳號 + 內容 + 時間」為 key 過濾已看過的推文，新推文進入 FIFO 隊列。

@@ -25,6 +25,15 @@ xcodegen generate             # 新增/刪除/搬移原始檔後必須執行
 - 細部規範在 `.claude/rules/`：UI 用詞、按鍵與終端機 UI、驗證方式、PTT 網路特性。telnet 改版的設計與計畫在 `docs/superpowers/`。
 - `.superpowers/` 是草圖與改版過程快照，可刪除，不屬於產品程式碼。
 
+### 發版流程
+
+1. `project.yml` 調 `MARKETING_VERSION` 與 `CURRENT_PROJECT_VERSION`，`xcodegen generate`。
+2. `CHANGELOG.md` 最上方新增該版（繁中，寫使用者看得到的症狀與修正）。
+3. 跑完整測試 → commit → push。
+4. `./scripts/package.sh` 產生 `dist/PTTMarquee-<版本>.dmg/.zip`（版本從 build 出來的 Info.plist 讀，`dist/` 不進 git）。
+5. `gh release create v<版本> dist/PTTMarquee-<版本>.dmg dist/PTTMarquee-<版本>.zip`，release notes 用 CHANGELOG 該版內容。發佈是公開動作，先取得使用者同意。
+- 個人專案：不要用公司的簽章憑證；app 為 ad-hoc 簽章、未公證。
+
 ## 架構
 
 資料流：`AppDelegate` → `FloatingPanelController.shared`（`WindowController.swift`）建立無邊框 `NSPanel`，以 `NSHostingView` 掛上 `ChatOverlayView`，並持有唯一的 `ChatViewModel`。
@@ -33,6 +42,8 @@ xcodegen generate             # 新增/刪除/搬移原始檔後必須執行
   - 一條 `pollTask` 無限輪詢迴圈，依 `targetArticle` 是否為 nil 分成兩種模式：
     - **看板聚合模式**：`PTTCrawlerService.fetchLatestMessages` 抓看板最新 8 篇文章（不足時補抓上一頁）的推文，全部丟進 queue。
     - **單篇實況模式**（`targetArticle != nil`）：首次載入直接把最後 40 筆塞進 `messages`，並 `markSeen` 全部推文；之後的新推文才走 queue。
+  - 每輪抓完才 `sleep` 設定的間隔（看板最少 4 秒、單篇最少 2 秒），所以實際週期 = 間隔 + PTT 回應時間。預設看板 8 秒、單篇 3 秒；預設看板名稱是 `PTTBoard.defaultBoardName`（Stock）。
+  - `changeBoard` 選到目前看板時只會 `unlockTargetArticle()`（單篇實況中才清空並重抓），其餘情況改 `currentBoard` 觸發清空；`BoardSwitchTests` 會擋。
   - 切換模式／看板的固定手續：`pollTask?.cancel()` → `queueManager.reset()` → `messages.removeAll()` → `startPolling()`。新增任何切換入口都要照做，否則舊任務的結果會混進來。`currentBoard` 的 `didSet` 會自動觸發 `onBoardChanged()`。
   - 所有設定以 `PTTMarquee_*` key 存在 `UserDefaults`（在各屬性 `didSet` 寫入、`init` 讀回並套預設值）。視窗位置由 `setFrameAutosaveName("PTTMarqueeMainWindow")` 記憶。
   - `messages` 上限 150 筆；`filteredMessages` 依 `filterType` 篩選供畫面使用。
