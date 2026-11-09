@@ -24,6 +24,7 @@
 		60FEFDBBF26FF61318C7D7BF /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC6020AB23D02ED67A59B2B /* ChatViewModel.swift */; };
 		6402EDCCC3BA89032116F07B /* TerminalScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77139CF0E69FE34131AED12B /* TerminalScreen.swift */; };
 		7730824F83D4B3E732A4D1AF /* MessageQueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324B1D0C0AA4E6D835EC359C /* MessageQueueManager.swift */; };
+		7A8C62C9E365497958629C28 /* CrawlerCachingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E80BCD666FF479B3A092DA7 /* CrawlerCachingTests.swift */; };
 		7AA6AA02CED190F39B00B8A9 /* BlockBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3CEB281C7437DA1532CA75 /* BlockBar.swift */; };
 		7B2F0DFB0709E5E9C1C1A143 /* PTTMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC19D32384572EF73F90B806 /* PTTMessage.swift */; };
 		85E6C1841D13EB2A7EA62756 /* TerminalSeparatorRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D286D21F1EA13AF0443667 /* TerminalSeparatorRow.swift */; };
@@ -63,6 +64,7 @@
 		687D9841F88975FA58E3E2FF /* ChatOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOverlayView.swift; sourceTree = "<group>"; };
 		6B3CEB281C7437DA1532CA75 /* BlockBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockBar.swift; sourceTree = "<group>"; };
 		77139CF0E69FE34131AED12B /* TerminalScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalScreen.swift; sourceTree = "<group>"; };
+		7E80BCD666FF479B3A092DA7 /* CrawlerCachingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrawlerCachingTests.swift; sourceTree = "<group>"; };
 		8490107A7348476657501798 /* FetchErrorHandlingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchErrorHandlingTests.swift; sourceTree = "<group>"; };
 		84B5195CE0202C703C647DC6 /* DefaultBoardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBoardTests.swift; sourceTree = "<group>"; };
 		87D00049129A49C32C0A1680 /* ScrollTopBottomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollTopBottomTests.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				8BE02D630BAD5F0794E16843 /* BlockBarTests.swift */,
 				E03F2AA8DF4E1725EF43A233 /* BoardSwitchTests.swift */,
 				EC11CD66CC93766C5B35F9D2 /* ChatRowTests.swift */,
+				7E80BCD666FF479B3A092DA7 /* CrawlerCachingTests.swift */,
 				84B5195CE0202C703C647DC6 /* DefaultBoardTests.swift */,
 				8490107A7348476657501798 /* FetchErrorHandlingTests.swift */,
 				AD5143F1078912CD69E31719 /* KeyCommandTests.swift */,
@@ -306,6 +309,7 @@
 				4B49C821E186FE42F1E054DE /* BlockBarTests.swift in Sources */,
 				350E94E7E884AC3E016B0F8E /* BoardSwitchTests.swift in Sources */,
 				5BC33933F3B8B623604131E0 /* ChatRowTests.swift in Sources */,
+				7A8C62C9E365497958629C28 /* CrawlerCachingTests.swift in Sources */,
 				DBA9BCE5B09BD29FB7FF4389 /* DefaultBoardTests.swift in Sources */,
 				BB62560A1E3E5B7641AA9315 /* FetchErrorHandlingTests.swift in Sources */,
 				C024EA424666C07A91581035 /* KeyCommandTests.swift in Sources */,
@@ -360,7 +364,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -374,7 +378,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -435,7 +439,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -455,7 +459,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;

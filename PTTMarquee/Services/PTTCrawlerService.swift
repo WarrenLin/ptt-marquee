@@ -4,7 +4,15 @@ public actor PTTCrawlerService {
     private let session: URLSession
 
     public init() {
+        self.session = URLSession(configuration: Self.makeSessionConfiguration())
+    }
+
+    /// PTT 文章頁回 `Cache-Control: max-age=900`：若用預設 URLCache，15 分鐘內每次輪詢都讀到快取的舊頁面，
+    /// 新推文要等快取過期才一次出現。輪詢一定要拿最新內容，所以完全不使用快取。
+    static func makeSessionConfiguration() -> URLSessionConfiguration {
         let configuration = URLSessionConfiguration.default
+        configuration.urlCache = nil
+        configuration.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         configuration.httpCookieAcceptPolicy = .always
         configuration.httpShouldSetCookies = true
         configuration.timeoutIntervalForRequest = 10
@@ -13,7 +21,7 @@ public actor PTTCrawlerService {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
             "Cookie": "over18=1"
         ]
-        self.session = URLSession(configuration: configuration)
+        return configuration
     }
 
     /// 抓取指定看板的最新文章列表

@@ -7,6 +7,7 @@ paths:
 # PTT 網路特性
 
 - www.ptt.cc（經 Cloudflare）實測約每兩分鐘卡住一次：15～30 秒沒有回應，或回 HTTP 525。關掉 app 量測一樣會發生，所以不是本工具請求太頻繁造成的。
+- **不可使用 HTTP 快取**：PTT 文章頁回 `Cache-Control: max-age=900`。用預設 URLCache 時，15 分鐘內每次輪詢都讀到快取的舊頁面，看起來像「設定 7 秒刷新卻沒刷」。`PTTCrawlerService.makeSessionConfiguration()` 設 `urlCache = nil` 與 `.reloadIgnoringLocalAndRemoteCacheData`，`CrawlerCachingTests` 會擋。驗證刷新時用 `nettop -P -p <pid> -L 1 -J bytes_in` 每秒取樣：每輪應有數十 KB（列表頁 + 8 篇文章）；只有約 3KB 代表文章頁沒走網路。
 - 請求逾時維持 10 秒。PTT 卡住時常常完全沒有回應，拉長逾時沒有幫助，只會拖慢輪詢。
 - 錯誤顯示：`recordFetchFailure` 連續失敗 `fetchFailureThreshold`（3）次才顯示中文紅字；`recordFetchSuccess` 或暫停時清除。單次 timeout 不是 bug，不要為它加重試迴圈或改逾時。
 - 只有看板列表頁失敗會顯示錯誤；各篇文章抓取失敗會被靜默略過（`fetchPushes` 用 `try?`）。
